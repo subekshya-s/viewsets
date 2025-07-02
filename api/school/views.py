@@ -4,12 +4,23 @@ from rest_framework import status
 from school.models import Student
 from school.serializer import StudentSerializer
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
+
+#adding the pagination
+class StudentPagination(PageNumberPagination):
+      page_size=5
+      max_page_size=50
 
 class StudentViewSet(viewsets.ViewSet):
-    def list(self,request):
-        stu=Student.objects.all()
-        serializer=StudentSerializer(stu,many=True)
-        return Response(serializer.data)
+    pagination_class=StudentPagination
+
+    def list(self, request):
+        paginator = self.pagination_class()
+        stu = Student.objects.all()
+        page = paginator.paginate_queryset(stu, request)
+        serializer = StudentSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
     
     def retrieve(self,request,pk=None):
         id=pk
@@ -48,5 +59,10 @@ class StudentViewSet(viewsets.ViewSet):
         stu=Student.objects.get(pk=id)
         stu.delete()
         return Response({'msg':'Data Deleted'})
+
+
+
+
+
 
 
