@@ -12,7 +12,7 @@ class StudentPagination(PageNumberPagination):
 
 class StudentViewSet(viewsets.ViewSet):
     pagination_class = StudentPagination
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend] #djangofilterbackend  built-in that filters exact value like roll_no =1
     search_fields = ['name']             
     ordering_fields = ['roll']           
     filterset_fields = ['roll']          

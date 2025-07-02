@@ -27,5 +27,5 @@ router.register('studentschool',views.StudentViewSet,basename='student')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include(router.urls)),  
+    path('',include(router.urls)),  #include all urls registeres through thr DRF router
 ]
